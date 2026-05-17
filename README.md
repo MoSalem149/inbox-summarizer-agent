@@ -1,4 +1,4 @@
-# Email Summarizer
+# Inbox Summarizer
 
 Paste a long email and get bullet points, action items, and deadlines using the OpenAI API.
 
