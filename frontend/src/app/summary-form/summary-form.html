@@ -1,1 +1,60 @@
-<p>summary-form works!</p>
+<div class="container">
+  <header>
+    <h1>Email Summarizer</h1>
+    <p>Paste a long email and get bullet points, action items, and deadlines.</p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label for="email">Email content</label>
+    <textarea
+      id="email"
+      formControlName="email"
+      rows="12"
+      placeholder="Paste your long email here..."
+    ></textarea>
+    @if (form.controls['email'].touched && form.controls['email'].invalid) {
+      <p class="hint">Enter at least 20 characters of email text.</p>
+    }
+    <button type="submit" [disabled]="loading || form.invalid">
+      {{ loading ? 'Summarizing…' : 'Summarize' }}
+    </button>
+  </form>
+
+  @if (errorMessage) {
+    <p class="error" role="alert">{{ errorMessage }}</p>
+  }
+
+  @if (result) {
+    <section class="result">
+      <h2>Summary</h2>
+      <p>{{ result.summary }}</p>
+
+      @if (result.bullets.length) {
+        <h3>Key points</h3>
+        <ul>
+          @for (b of result.bullets; track b) {
+            <li>{{ b }}</li>
+          }
+        </ul>
+      }
+
+      @if (result.actionItems.length) {
+        <h3>Action items</h3>
+        <ul>
+          @for (a of result.actionItems; track a) {
+            <li>{{ a }}</li>
+          }
+        </ul>
+      }
+
+      @if (result.deadlines.length) {
+        <h3>Deadlines</h3>
+        <ul>
+          @for (d of result.deadlines; track d) {
+            <li>{{ d }}</li>
+          }
+        </ul>
+      }
+    </section>
+  }
+</div>
