@@ -1,60 +1,74 @@
-<div class="container">
-  <header>
-    <h1>Email Summarizer</h1>
-    <p>Paste a long email and get bullet points, action items, and deadlines.</p>
-  </header>
+<div class="app">
+  <div class="layout">
+    <!-- LEFT: Input -->
+    <section class="panel editor">
+      <header class="topbar">
+        <h1>Email Summarizer</h1>
+        <p>Turn long emails into structured insights instantly.</p>
+      </header>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label for="email">Email content</label>
-    <textarea
-      id="email"
-      formControlName="email"
-      rows="12"
-      placeholder="Paste your long email here..."
-    ></textarea>
-    @if (form.controls['email'].touched && form.controls['email'].invalid) {
-      <p class="hint">Enter at least 20 characters of email text.</p>
-    }
-    <button type="submit" [disabled]="loading || form.invalid">
-      {{ loading ? 'Summarizing…' : 'Summarize' }}
-    </button>
-  </form>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="editor-card">
+        <label>Email content</label>
 
-  @if (errorMessage) {
-    <p class="error" role="alert">{{ errorMessage }}</p>
-  }
+        <textarea
+          formControlName="email"
+          rows="14"
+          placeholder="Paste your email here..."
+        ></textarea>
 
-  @if (result) {
-    <section class="result">
-      <h2>Summary</h2>
-      <p>{{ result.summary }}</p>
+        @if (form.controls['email'].touched && form.controls['email'].invalid) {
+        <div class="hint">Minimum 20 characters required</div>
+        }
 
-      @if (result.bullets.length) {
-        <h3>Key points</h3>
-        <ul>
+        <button type="submit" [disabled]="loading || form.invalid">
+          {{ loading ? 'Analyzing…' : 'Generate Summary' }}
+        </button>
+      </form>
+    </section>
+
+    <!-- RIGHT: Output -->
+    <section class="panel output">
+      @if (!result && !loading) {
+      <div class="empty">
+        <h2>No summary yet</h2>
+        <p>Your AI-generated insights will appear here.</p>
+      </div>
+      } @if (loading) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Analyzing email...</p>
+      </div>
+      } @if (result) {
+      <div class="result-card">
+        <h2>Summary</h2>
+        <p class="summary">{{ result.summary }}</p>
+
+        @if (result.bullets.length) {
+        <h3>Key insights</h3>
+        <div class="list">
           @for (b of result.bullets; track b) {
-            <li>{{ b }}</li>
+          <div class="item">• {{ b }}</div>
           }
-        </ul>
-      }
-
-      @if (result.actionItems.length) {
+        </div>
+        } @if (result.actionItems.length) {
         <h3>Action items</h3>
-        <ul>
+        <div class="list">
           @for (a of result.actionItems; track a) {
-            <li>{{ a }}</li>
+          <div class="item action">⚡ {{ a }}</div>
           }
-        </ul>
-      }
-
-      @if (result.deadlines.length) {
+        </div>
+        } @if (result.deadlines.length) {
         <h3>Deadlines</h3>
-        <ul>
+        <div class="list">
           @for (d of result.deadlines; track d) {
-            <li>{{ d }}</li>
+          <div class="item danger">⏳ {{ d }}</div>
           }
-        </ul>
+        </div>
+        }
+      </div>
+      } @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
       }
     </section>
-  }
+  </div>
 </div>

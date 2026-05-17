@@ -1,83 +1,270 @@
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
+/* =========================
+   APP BACKGROUND
+========================= */
+.app {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  color: #e5e7eb;
+
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(99, 102, 241, 0.25),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(34, 211, 238, 0.18),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(16, 185, 129, 0.12),
+      transparent 40%
+    ),
+    #0b1220;
+
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  position: relative;
 }
 
-header h1 {
-  margin: 0 0 0.5rem;
-  font-size: 1.75rem;
+/* subtle grid (very low contrast to avoid borders look) */
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+
+  background-size: 44px 44px;
+  opacity: 0.08;
 }
 
-header p {
-  margin: 0 0 1.5rem;
-  color: #555;
+/* =========================
+   LAYOUT
+========================= */
+.layout {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+/* =========================
+   GLASS CARDS (FIXED)
+========================= */
+.editor-card,
+.result-card {
+  margin-top: 1.5rem;
+
+  background: rgba(15, 23, 42, 0.55); /* 🔥 darker glass = no white edges */
+  border: 1px solid rgba(148, 163, 184, 0.12); /* soft gray border */
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 18px;
+  padding: 1.25rem;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+/* hover glow */
+.editor-card:hover,
+.result-card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(99, 102, 241, 0.08);
+}
+
+/* =========================
+   HEADER
+========================= */
+.topbar h1 {
+  font-size: 2rem;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.topbar p {
+  margin-top: 0.5rem;
+  color: #94a3b8;
+}
+
+/* =========================
+   TEXTAREA (FIXED BORDER)
+========================= */
 textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font: inherit;
+  min-height: 280px;
+
+  border-radius: 14px;
+  padding: 1rem;
+
+  background: rgba(15, 23, 42, 0.4);
+
+  border: 1px solid rgba(148, 163, 184, 0.15); /* 🔥 no white border */
+
+  color: #e5e7eb;
   resize: vertical;
+
+  transition: 0.2s ease;
 }
 
-.hint {
-  margin: 0.5rem 0 0;
-  color: #b45309;
-  font-size: 0.875rem;
+textarea::placeholder {
+  color: rgba(148, 163, 184, 0.6);
 }
 
+textarea:focus {
+  outline: none;
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+/* =========================
+   LABEL
+========================= */
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #cbd5e1;
+}
+
+/* =========================
+   BUTTON
+========================= */
 button {
   margin-top: 1rem;
-  padding: 0.65rem 1.25rem;
-  font: inherit;
-  font-weight: 600;
-  color: #fff;
-  background: #2563eb;
+  width: 100%;
+  padding: 0.9rem;
+
   border: none;
-  border-radius: 8px;
+  border-radius: 14px;
+
+  font-weight: 600;
+  color: white;
   cursor: pointer;
+
+  background: linear-gradient(135deg, #6366f1, #22c55e);
+
+  box-shadow:
+    0 12px 25px rgba(99, 102, 241, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(99, 102, 241, 0.35);
 }
 
 button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
 }
 
-.error {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background: #fef2f2;
-  color: #b91c1c;
-  border-radius: 8px;
-}
-
-.result {
-  margin-top: 2rem;
-  padding: 1.25rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-}
-
-.result h2,
-.result h3 {
-  margin: 1.25rem 0 0.5rem;
-}
-
-.result h2:first-child {
+/* =========================
+   RESULT TEXT
+========================= */
+.result-card h2 {
   margin-top: 0;
 }
 
-.result ul {
-  margin: 0;
-  padding-left: 1.25rem;
+.result-card h3 {
+  margin-top: 1.2rem;
+  color: #cbd5e1;
+}
+
+.summary {
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* =========================
+   LIST ITEMS
+========================= */
+.item {
+  padding: 0.35rem 0;
+  color: #e2e8f0;
+}
+
+.action {
+  color: #34d399;
+}
+
+.danger {
+  color: #fb7185;
+}
+
+/* =========================
+   STATES
+========================= */
+.empty,
+.loading {
+  text-align: center;
+  margin-top: 4rem;
+  color: #94a3b8;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 1rem;
+
+  border: 3px solid rgba(148, 163, 184, 0.2);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* =========================
+   ERROR
+========================= */
+.error {
+  margin-top: 1rem;
+  padding: 1rem;
+
+  border-radius: 14px;
+
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+
+  color: #fca5a5;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }

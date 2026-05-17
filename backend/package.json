@@ -2,7 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx --env-file=.env src/app.ts"
+    "dev": "tsx --env-file=.env src/app.ts",
+    "start": "node dist/app.js",
+    "build": "tsc"
   },
   "dependencies": {
     "cors": "^2.8.6",
