@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Email Summarizer
 
 Paste a long email and get bullet points, action items, and deadlines using the OpenAI API.
@@ -119,4 +118,3 @@ _Note: Make sure the backend is running on `http://localhost:3000` so the Angula
 ## License
 
 MoSalem149
->>>>>>> 0d86d5007d66ba2ede2e777e85bf86059c8a1270
