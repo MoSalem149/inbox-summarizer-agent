@@ -46,7 +46,7 @@ Open http://localhost:4200. The UI calls the API at http://localhost:3000.
 | `OPENAI_API_KEY` | Required for summarization           |
 | `OPENAI_MODEL`   | Model name (default: `gpt-4o-mini`)  |
 | `PORT`           | API port (default: `3000`)           |
-=======
+
 # Email Summarizer Agent
 
 Email Summarizer AI Agent built with Angular frontend and Node.js/Express backend in TypeScript.
