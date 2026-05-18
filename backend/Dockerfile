@@ -2,15 +2,12 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
-
 COPY . .
 
-# build TypeScript
-RUN npm run build
+RUN npm install
 
 ENV PORT=3000
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npx", "tsx", "src/app.ts"]
